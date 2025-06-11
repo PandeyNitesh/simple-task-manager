@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.next
+.open-next
 
 # testing
 /coverage
@@ -56,6 +58,7 @@ yarn-error.log*
 
 # Env
 .env
+.env.example
 .env.local
 .env.*.local
 
