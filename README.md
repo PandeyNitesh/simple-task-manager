@@ -1,29 +1,150 @@
-# Create T3 App
+# 🧩 TaskBoard – T3 Fullstack App Deployed with SST
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+TaskBoard is a full-stack application built using the [T3 Stack](https://create.t3.gg), with authentication handled by **NextAuth** (credentials provider), **Supabase** as the database, and deployed on **AWS serverless** infrastructure using **SST v3** and **OpenNext**.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 📦 Tech Stack
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- [Next.js](https://nextjs.org/) – Frontend Framework
+- [tRPC](https://trpc.io/) – Type-safe API Layer
+- [Prisma](https://www.prisma.io/) – ORM for Supabase
+- [Supabase](https://supabase.io/) – Postgres DB (used in dev & prod)
+- [NextAuth.js](https://next-auth.js.org/) – Auth (Credentials Provider)
+- [Tailwind CSS](https://tailwindcss.com/) – Styling
+- [SST v3](https://sst.dev/) – Serverless infrastructure deployment
+- [OpenNext](https://github.com/serverless-stack/open-next) – Adapter for deploying Next.js to AWS Lambda
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## 🚀 Project Structure
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```
+/
+├── app/                  # App routes
+├── pages/                # Traditional pages
+├── server/               # tRPC routers, Prisma client, auth config
+├── utils/                # tRPC API client and helpers
+├── prisma/               # schema.prisma + migrations
+├── public/               # Static assets
+├── styles/               # Global CSS
+├── sst.config.ts         # SST deployment config
+├── .env                  # Environment variables
+└── README.md             # You're here
+```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+---
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## 🧑‍💻 Development
 
-## How do I deploy this?
+1. **Install dependencies:**
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+npm install
+```
+
+2. **Run locally:**
+
+```bash
+npx prisma generate
+npx prisma db push
+npm run dev
+```
+
+3. **Start SST dev mode:**
+
+```bash
+npx sst dev
+```
+
+---
+
+## ☁️ Deployment (AWS via SST)
+
+1. **Ensure you're authenticated with AWS:**
+
+```bash
+aws configure
+```
+
+2. **Deploy to AWS:**
+
+```bash
+npx sst deploy
+```
+
+The deployed site URL will be printed after deploy.
+
+---
+
+## 🛠️ Environment Variables
+
+Create a `.env` file in the root with:
+
+```env
+DATABASE_URL=postgresql://...
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=https://your-deployed-url.com
+```
+
+---
+
+## 🔐 Authentication
+
+- **NextAuth** is set up with **credentials provider**.
+- After login, users are redirected to `/dashboard`.
+- Auth sessions are managed server-side via Prisma Adapter (or direct Supabase integration).
+
+---
+
+## 📥 API Routes
+
+```bash
+/api/ping               # Health check
+/api/auth/[...nextauth]# Auth routes
+/api/trpc/[trpc]        # tRPC handler
+/api/task               # Task-related API
+/api/profile            # Profile details
+```
+
+---
+
+## 📦 Build & Logs
+
+- Build artifacts (`.next/`, `.open-next/`) are not committed to Git.
+- AWS Lambda logs are viewable in **CloudWatch → Log groups** (prefixed with `/aws/lambda/`).
+
+---
+
+## 🧹 Notes
+
+- Prisma binary must target `linux-arm64` for Lambda:
+
+  In `schema.prisma`:
+
+  ```prisma
+  generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "linux-arm64-openssl-1.0.x"]
+  }
+  ```
+
+  Then regenerate:
+
+  ```bash
+  npx prisma generate
+  ```
+
+- Do **not** push `.sst/` or `.open-next/` folders to Git.
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+## ✨ Credits
+
+Built with ❤️ using the [T3 Stack](https://create.t3.gg) and [SST](https://sst.dev/)
