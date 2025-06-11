@@ -12,7 +12,7 @@ TaskBoard is a full-stack application built using the [T3 Stack](https://create.
 - [Supabase](https://supabase.io/) – Postgres DB (used in dev & prod)
 - [NextAuth.js](https://next-auth.js.org/) – Auth (Credentials Provider)
 - [Tailwind CSS](https://tailwindcss.com/) – Styling
-- [SST v3](https://sst.dev/) – Serverless infrastructure deployment
+- [SST v2](https://sst.dev/) – Serverless infrastructure deployment
 - [OpenNext](https://github.com/serverless-stack/open-next) – Adapter for deploying Next.js to AWS Lambda
 
 ---
