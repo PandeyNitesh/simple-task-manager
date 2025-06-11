@@ -44,3 +44,20 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# SST
+.sst
+.output
+.build
+.serverless
+
+# Next.js
+.next
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules
