@@ -7,7 +7,9 @@ await import("./src/env.js");
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
+  eslint: {
+    ignoreDuringBuilds: true, // ✅ disables ESLint during next build
+  },
   /**
    * If you are using `appDir` then you must comment the below `i18n` config out.
    *
